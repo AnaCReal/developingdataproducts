@@ -1,0 +1,60 @@
+---
+title: "Week 2 R Markdown and Leaflet"
+author: "Ana Real"
+date: "April 21, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Mexico's great universities.
+
+For this map I decided to highlight some great mexican universities in the city and you should be able to visit the website by clicking the icon.
+
+```{r echo=FALSE, warning=FALSE}
+library(leaflet)
+unamIcon <- makeIcon(
+  iconUrl = "https://arquitectura.unam.mx/uploads/8/1/1/0/8110907/_2634443.png",
+  iconWidth = 51*215/230, iconHeight = 51,
+  iconAnchorX = 61*215/230/2, iconAnchorY = 36
+)
+
+uamIcon <- makeIcon(
+  iconUrl = "https://www.azc.uam.mx/of_comunicacion/identidad/digitales/LogoA2Digitales.jpg",
+  iconWidth = 61*215/230, iconHeight = 61,
+  iconAnchorX = 71*215/230/2, iconAnchorY = 46
+)
+
+ipnIcon <- makeIcon(
+  iconUrl = "http://tvurbananoticias.com.mx/wp-content/uploads/2019/03/ipn-logo.png",
+  iconWidth = 71*215/230, iconHeight = 51,
+  iconAnchorX = 71*215/230/2, iconAnchorY = 56
+)
+
+tecIcon <- makeIcon(
+  iconUrl = "https://javier.rodriguez.org.mx/itesm/2014/tecnologico-de-monterrey-black.png",
+  iconWidth = 81*215/230, iconHeight = 41,
+  iconAnchorX = 61*215/230/2, iconAnchorY = 56
+)
+
+Icons <- iconList(unamIcon, uamIcon, ipnIcon, tecIcon)
+
+unisLatLong <- data.frame(
+  lat = c(19.3329, 19.2867, 19.50056, 19.5942),
+  lng = c(-99.1851, -99.1369, -99.13972, -99.228103))
+
+Sites <- c(
+  "<a href='https://www.unam.mx/'>Universidad Nacional Autonoma de Mexico</a>",
+  "<a href='https://www.uam.mx/'>Universidad Autonoma Metropolitana</a>",
+  "<a href='https://www.ipn.mx/'>Instituto Politecnico Nacional</a>",
+  "<a href='https://tec.mx/es'>Tecnologico de Monterrey</a>"
+)
+
+unisLatLong %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = Icons, popup = Sites)
+```
+
