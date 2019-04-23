@@ -1,0 +1,35 @@
+---
+title: 'Peer-graded assignment: R Markdown Presentation and Plotly'
+author: "Ana Real"
+date: "April 23, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Sleep
+
+The sleep dataset shows the effect of two soporific drugs (increase in hours of sleep compared to control) on 10 students.
+
+```{r load}
+library(knitr)
+data(sleep)
+kable(head(sleep))
+```
+
+## Extra hours of sleep vs drug given
+
+```{r plot1, echo=TRUE, message=FALSE, warning=FALSE}
+library(plotly)
+plot_ly(sleep, y = ~extra, color = ~group, type = "box")
+```
+
+## Slide with R Output
+
+```{r plot2, echo=TRUE, message=FALSE, warning=FALSE}
+plot_ly(sleep, x= ~ID, y = ~extra, color = ~group, type = "scatter")
+```
+
+## Thanks!!!
