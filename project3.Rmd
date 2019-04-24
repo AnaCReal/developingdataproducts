@@ -1,0 +1,50 @@
+---
+title: 'Peer-graded Assignment: Sniny & RMarkdown'
+author: "Ana Real"
+date: "April 24, 2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Personal savings per country
+
+In this work you can see the most important variable related to personal savings on people from 50 countries.
+
+```{r tab, message=FALSE, warning=FALSE}
+library(knitr)
+kable(head(data.frame("country"=rownames(LifeCycleSavings),LifeCycleSavings)))
+```
+
+## App
+
+In the application you are able to understand the variables behind the **sr** personal savings variable.
+
+```{r plot, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(reshape2)
+data <- melt(LifeCycleSavings, id.vars="sr", value.name = "predictors")
+ggplot(data, aes(x=sr, y=predictors, col=variable)) + geom_point()
+```
+
+## Example
+
+Select one predictor and get the plot with the regression line.
+
+```{r plot2, message=FALSE, warning=FALSE}
+model1 <- lm(sr ~ pop15, data = LifeCycleSavings)
+plot(LifeCycleSavings$sr, LifeCycleSavings$pop15, xlab = "Personal Savings", 
+                 ylab = "Numeric % of population under 15", bty = "n", pch = 16,
+                 xlim = c(0,21), ylim = c(0,45))
+            abline(model1, col = "purple", lwd = 2)
+```
+
+## Summary
+
+Get an easy summary of the predictor choosen in the last tab.
+
+```{r box}
+boxplot(LifeCycleSavings$pop15, main = "Numeric % population under 15")
+```
